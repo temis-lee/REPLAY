@@ -1,0 +1,13 @@
+{
+  "name": "glass-wlan-player",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Liquid-glass local and WLAN video player",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
