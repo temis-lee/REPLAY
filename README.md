@@ -1,4 +1,4 @@
-# Glass WLAN Video Player
+# WLAN Video Player
 
 A self-hosted HTML/CSS/JavaScript video player with:
 - Liquid-glass UI
