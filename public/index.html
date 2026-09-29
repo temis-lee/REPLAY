@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080a0f">
+<title>REPL▶Y</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="ambient ambient-a"></div>
+<div class="ambient ambient-b"></div>
+
+<main class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">▶</div>
+      <div>
+        <strong>REPL▶Y</strong>
+        <span>Local media · WLAN streaming</span>
+      </div>
+    </div>
+
+    <div class="mode-switch glass">
+      <button class="mode active" data-mode="local">Local</button>
+      <button class="mode" data-mode="wlan">WLAN</button>
+    </div>
+  </header>
+
+  <section class="player-card glass">
+    <div class="video-wrap" id="videoWrap">
+      <video id="video" playsinline preload="metadata"></video>
+
+      <div class="video-shade"></div>
+
+      <div class="center-control" id="centerControl">
+        <span id="centerIcon">▶</span>
+      </div>
+
+      <div class="toast" id="toast"></div>
+      <div class="gesture-indicator" id="gestureIndicator"></div>
+
+      <div class="controls" id="controls">
+        <div class="scrubber-row">
+          <span class="tiny-time" id="currentTime">0:00</span>
+
+          <div class="scrubber" id="scrubber">
+            <div class="buffered" id="buffered"></div>
+            <div class="played" id="played"></div>
+            <div class="scrubber-thumb"></div>
+          </div>
+
+          <span class="tiny-time" id="duration">0:00</span>
+        </div>
+
+        <div class="control-row">
+          <button class="control" id="play" title="Play / Pause">▶</button>
+          <button class="control" id="back10" title="Back 10 seconds">↶</button>
+          <button class="control" id="forward10" title="Forward 10 seconds">↷</button>
+
+          <div class="control-spacer"></div>
+
+          <div class="volume-group">
+            <button class="control" id="mute" title="Mute">🔊</button>
+            <input id="volume" type="range" min="0" max="1" step="0.01" value="1">
+          </div>
+
+          <button class="control" id="orientation" title="Toggle screen orientation">&#8635;</button>
+
+          <button class="control" id="speed" title="Playback speed">1×</button>
+          <button class="control" id="pip" title="Picture in Picture">▣</button>
+          <button class="control" id="fullscreen" title="Fullscreen">⛶</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="library glass">
+    <div class="library-head">
+      <div>
+        <h2 id="libraryTitle">Local Videos</h2>
+        <p id="librarySubtitle">Choose videos from this device.</p>
+      </div>
+
+      <label class="add-button">
+        Add videos
+        <input id="fileInput" type="file" accept="video/*" multiple hidden>
+      </label>
+
+      <button class="refresh-button" id="refresh">Refresh</button>
+    </div>
+
+    <div class="drop-zone" id="dropZone">
+      <div class="drop-icon">＋</div>
+      <strong>Drop videos here</strong>
+      <span>or use “Add videos” above</span>
+    </div>
+
+    <div class="playlist" id="playlist"></div>
+  </section>
+
+  <footer>
+    <span id="status">Local mode</span>
+    <span>Space Play/Pause · ← → Seek · F Fullscreen · M Mute</span> <span>Aretmis2026</span>
+  </footer>
+</main>
+
+<script src="app.js"></script>
+<script>
+  document.getElementById("orientation").addEventListener("click", async () => {
+    const target = screen.orientation && screen.orientation.type && screen.orientation.type.startsWith("landscape")
+      ? "portrait" : "landscape";
+
+    try {
+      if (!document.fullscreenElement) {
+        await document.getElementById("videoWrap").requestFullscreen();
+      }
+      await screen.orientation.lock(target);
+    } catch {
+      alert("Orientation changes are available in fullscreen on supported mobile browsers.");
+    }
+  });
+</script>
+</body>
+</html>
